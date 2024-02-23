@@ -1335,13 +1335,11 @@ public abstract class IccRecords extends Handler implements IccConstants {
     @CarrierNameDisplayConditionBitmask
     public static int convertSpnDisplayConditionToBitmask(int condition) {
         int carrierNameDisplayCondition = 0;
-        boolean plmnRequired = (condition & 0x1) == 0x1;
-        boolean spnRequired = (condition & 0x2) == 0;
         // b1 = 0: display of registered PLMN name not required when registered PLMN is
         // either HPLMN or a PLMN in the service provider PLMN list.
         // b1 = 1: display of registered PLMN name required when registered PLMN is
         // either HPLMN or a PLMN in the service provider PLMN list.
-        if (plmnRequired && !spnRequired) {
+        if ((condition & 0x1) == 0x1) {
             carrierNameDisplayCondition |= CARRIER_NAME_DISPLAY_CONDITION_BITMASK_PLMN;
         }
 
@@ -1349,7 +1347,7 @@ public abstract class IccRecords extends Handler implements IccConstants {
         // PLMN is neither HPLMN nor a PLMN in the service provider PLMN list.
         // b2 = 1: display of the servier provider name is **not required** when
         // registered PLMN is neither HPLMN nor PLMN in the service provider PLMN list.
-        if (spnRequired) {
+        if ((condition & 0x2) == 0) {
             carrierNameDisplayCondition |= CARRIER_NAME_DISPLAY_CONDITION_BITMASK_SPN;
         }
 
