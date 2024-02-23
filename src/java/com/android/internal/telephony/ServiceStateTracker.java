@@ -2791,8 +2791,7 @@ public class ServiceStateTracker extends Handler {
             carrierName = plmn;
             if (showSpn) {
                 // Need to show both plmn and spn if both are not same.
-                if (plmn != null && spn != null
-                        && !plmn.toLowerCase().contains(spn.toLowerCase())) {
+                if (!Objects.equals(spn, plmn)) {
                     String separator = mPhone.getContext().getString(
                             com.android.internal.R.string.kg_text_message_separator).toString();
                     carrierName = new StringBuilder().append(carrierName).append(separator)
